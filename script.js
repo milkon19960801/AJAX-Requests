@@ -29,30 +29,23 @@ const getCountryData = function (country) {
     .then(data => renderCountry(data[0]));
 };
 
-getCountryData('sweden');
+//getCountryData('sweden');
 
 const getCountryDataAndNeighbour = function (country) {
-  const request = new XMLHttpRequest();
-  request.open('GET', `https://restcountries.eu/rest/v2/name/${country}`);
-  request.send();
+  // Country1
+  fetch(`https://restcountries.eu/rest/v2/name/${country}`)
+    .then(response => response.json())
+    .then(data => {
+      renderCountry(data[0]);
+      const neighbour = data[0].borders[0];
 
-  request.addEventListener('load', function () {
-    const [data] = JSON.parse(this.responseText);
+      if (!neighbour) return;
 
-    renderCountry(data);
-
-    const [neighbour] = data.borders;
-
-    if (!neighbour) return;
-
-    const request2 = new XMLHttpRequest();
-    request2.open('GET', `https://restcountries.eu/rest/v2/alpha/${neighbour}`);
-    request2.send();
-
-    request2.addEventListener('load', function () {
-      const data2 = JSON.parse(this.responseText);
-      renderCountry(data2, 'neighbour');
-    });
-  });
+      // Country2
+      return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbour}`);
+    })
+    .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbour'));
 };
-getCountryDataAndNeighbour('usa');
+
+getCountryDataAndNeighbour('italy');
