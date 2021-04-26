@@ -24,18 +24,12 @@ const renderCountry = function (data, className = '') {
 };
 
 const getCountryData = function (country) {
-  const request = new XMLHttpRequest();
-  request.open('GET', `https://restcountries.eu/rest/v2/name/${country}`);
-  request.send();
-
-  request.addEventListener('load', function () {
-    const [data] = JSON.parse(this.responseText);
-
-    renderCountry(data);
-  });
+  fetch(`https://restcountries.eu/rest/v2/name/${country}`)
+    .then(response => response.json())
+    .then(data => renderCountry(data[0]));
 };
 
-// getCountryData('sweden');
+getCountryData('sweden');
 
 const getCountryDataAndNeighbour = function (country) {
   const request = new XMLHttpRequest();
