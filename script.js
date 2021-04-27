@@ -4,7 +4,7 @@ const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
 const renderCountry = function (data, className = '') {
-  const html = ` 
+  const html = `
 <article class="country ${className}">
   <img class="country__img" src="${data.flag}" />
   <div class="country__data">
@@ -40,7 +40,7 @@ const getCountryData = function (country) {
   ).then(data => renderCountry(data[0]));
 };
 
-// getCountryData('sweden');
+getCountryData('sweden');
 
 const getCountryDataAndNeighbour = function (country) {
   // Country1
@@ -80,8 +80,6 @@ const whereAmI = function (lat, lng) {
       return response.json();
     })
     .then(data => {
-      // console.log(`You are in ${data.city}, ${data.country}`);
-
       return fetch(`https://restcountries.eu/rest/v2/name/${data.country}`);
     })
     .then(res => {
@@ -101,6 +99,31 @@ const whereAmI = function (lat, lng) {
     });
 };
 
-whereAmI(52.508, 13.381);
-whereAmI(19.037, 72.873);
-whereAmI(-33.933, 18.474);
+// whereAmI(52.508, 13.381);
+// whereAmI(19.037, 72.873);
+// whereAmI(-33.933, 18.474);
+
+// console.log('Test start');
+// setTimeout(() => console.log('0 sec timer'), 0);
+// Promise.resolve('Resolved promis 1').then(res => console.log(res));
+
+// Promise.resolve('Resolved promis 2').then(res => {
+//   for (let i = 0; i < 100; i++) {
+//     console.log(res);
+//   }
+// });
+// console.log('Test end');
+
+const lotteriPromise = new Promise(function (resolve, reject) {
+  if (Math.random() >= 0.5) {
+    resolve('You WIN 💰');
+  } else {
+    reject('You lost your money 💩');
+  }
+});
+
+console.log(lotteriPromise);
+lotteriPromise
+  .then(res => console.log(res))
+  .catch(err => console.log(err))
+  .finally(() => console.log('using own promises'));
