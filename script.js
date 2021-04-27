@@ -115,11 +115,14 @@ const whereAmI = function (lat, lng) {
 // console.log('Test end');
 
 const lotteriPromise = new Promise(function (resolve, reject) {
-  if (Math.random() >= 0.5) {
-    resolve('You WIN 💰');
-  } else {
-    reject('You lost your money 💩');
-  }
+  console.log('lotteri draw is happening ');
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve('You WIN 💰');
+    } else {
+      reject(new Error('You lost your money 💩'));
+    }
+  }, 2000);
 });
 
 console.log(lotteriPromise);
