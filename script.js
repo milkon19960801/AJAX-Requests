@@ -115,7 +115,7 @@ const whereAmI = function (lat, lng) {
 // console.log('Test end');
 
 const lotteriPromise = new Promise(function (resolve, reject) {
-  console.log('lotteri draw is happening ');
+  console.log('lotteri draw is happening 🔮');
   setTimeout(function () {
     if (Math.random() >= 0.5) {
       resolve('You WIN 💰');
@@ -130,3 +130,30 @@ lotteriPromise
   .then(res => console.log(res))
   .catch(err => console.log(err))
   .finally(() => console.log('using own promises'));
+
+// Promisifying setTimeout
+const wait = seconds =>
+  new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+
+// skip using callback hell
+wait(1)
+  .then(() => {
+    console.log('I waited for 1 seconds');
+    return wait(2);
+  })
+  .then(() => {
+    console.log('I waited for 2 seconds');
+    return wait(3);
+  })
+  .then(() => {
+    console.log('I waited for 3 seconds');
+    return wait(4);
+  })
+  .then(() => {
+    console.log('I waited for 4 seconds');
+  });
+
+Promise.resolve('abc').then(x => console.log(x));
+Promise.reject(new Error('abc')).then(x => console.log(x));
